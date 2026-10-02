@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kizzy-monster-academy.netlify.app/sitemap.xml
