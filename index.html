@@ -314,8 +314,28 @@
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.33-.04-1.56-.14-2.86-.14C11.93 2 10 3.66 10 6.7v2.8H7v4h3V22h4z'/%3E%3C/svg%3E") center / contain no-repeat;
         }
 
+        /* 📈 Pillar mini charts (inline SVG, drawn on scroll) */
+        #features .mac-hover-card { display: flex; flex-direction: column; }
+        .lg-chart svg { overflow: visible; }
+        .lg-chart .lg-c {
+            transform-box: fill-box;
+            transform-origin: center bottom;
+            transition: opacity 0.5s var(--lg-smooth), transform 0.7s var(--lg-spring);
+            transition-delay: calc(var(--i, 0) * 55ms);
+        }
+        .lg-chart .lg-line { stroke-dasharray: 100; transition: stroke-dashoffset 1.6s var(--lg-smooth); }
+        .lg-chart .lg-area { transition: opacity 1.2s var(--lg-smooth) 0.5s; }
+        .lg-chart.lg-armed:not(.lg-in) .lg-c { opacity: 0; transform: translateY(8px) scaleY(0.6); }
+        .lg-chart.lg-armed:not(.lg-in) .lg-line { stroke-dashoffset: 100; }
+        .lg-chart.lg-armed:not(.lg-in) .lg-area { opacity: 0; }
+        .lg-ping { transform-box: fill-box; transform-origin: center; animation: lgPing 2.2s var(--lg-smooth) infinite; }
+        @keyframes lgPing { 0% { transform: scale(1); opacity: 0.7; } 80%, 100% { transform: scale(3.4); opacity: 0; } }
+        .lg-scan { animation: lgScan 3.6s ease-in-out infinite; }
+        @keyframes lgScan { 0% { transform: translateX(4px); opacity: 0; } 12%, 88% { opacity: 0.8; } 100% { transform: translateX(232px); opacity: 0; } }
+
         @media (prefers-reduced-motion: reduce) {
-            .lg-blob, #paymentModal > div, #readerModal > div { animation: none !important; }
+            .lg-blob, #paymentModal > div, #readerModal > div, .lg-ping, .lg-scan { animation: none !important; }
+            .lg-scan { opacity: 0; }
         }
 
         .glow-cyan {
@@ -556,6 +576,29 @@
                 <p data-i18n="pillar1_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     ตรวจจับการเข้าสะสมของสถาบัน (Institutional Footprint) และรอราคา Pullback เข้าทดสอบโซน Order Block ร่วมกับ Fair Value Gap
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-cyan-500 dark:text-cyan-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <path d="M0 16H240M0 32H240M0 48H240" stroke="currentColor" stroke-opacity=".08"/>
+                            <rect x="78" y="22" width="158" height="11" rx="2" fill="#a78bfa" fill-opacity=".14" stroke="#a78bfa" stroke-opacity=".45" stroke-dasharray="3 3"/>
+                            <rect x="55.5" y="33" width="180.5" height="14" rx="2" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="3 3"/>
+                            <text x="234" y="30" text-anchor="end" font-size="7" font-weight="700" fill="#a78bfa">FVG</text>
+                            <text x="234" y="43.5" text-anchor="end" font-size="7" font-weight="700" fill="currentColor">OB</text>
+                            <g class="lg-c" style="--i:0"><path d="M14 17V31" stroke="#94a3b8" stroke-opacity=".7"/><rect x="9.5" y="20" width="9" height="8" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:1"><path d="M37 25V39" stroke="#94a3b8" stroke-opacity=".7"/><rect x="32.5" y="28" width="9" height="8" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:2"><path d="M60 33V47" stroke="#94a3b8" stroke-opacity=".7"/><rect x="55.5" y="36" width="9" height="8" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:3"><path d="M83 16V46" stroke="currentColor"/><rect x="78.5" y="18" width="9" height="26" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:4"><path d="M106 8V22" stroke="currentColor"/><rect x="101.5" y="10" width="9" height="10" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:5"><path d="M129 8V18" stroke="#94a3b8" stroke-opacity=".7"/><rect x="124.5" y="10" width="9" height="6" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:6"><path d="M152 14V28" stroke="#94a3b8" stroke-opacity=".7"/><rect x="147.5" y="16" width="9" height="10" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:7"><path d="M175 15V31" stroke="currentColor"/><rect x="170.5" y="17" width="9" height="10" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:8"><path d="M198 8V19" stroke="currentColor"/><rect x="193.5" y="10" width="9" height="7" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:9"><path d="M221 3V12" stroke="currentColor"/><rect x="216.5" y="5" width="9" height="5" rx="1.5" fill="currentColor"/></g>
+                            <circle class="lg-ping" cx="232" cy="5" r="2.5" fill="currentColor"/>
+                            <circle cx="232" cy="5" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- 2. Inversion FVG (iFVG) -->
@@ -568,6 +611,21 @@
                 <p data-i18n="pillar2_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     โมเดลยอดนิยม: เมื่อ FVG โซนเดิมถูกทะลุอย่างรุนแรง จะพลิกหน้าที่กลายเป็นแนวรับ/ต้านใหม่ทันทีเพื่อลั่นไกสไนเปอร์
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-teal-500 dark:text-teal-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <defs><linearGradient id="lgG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".35"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
+                            <path d="M0 16H240M0 32H240M0 48H240" stroke="currentColor" stroke-opacity=".08"/>
+                            <rect x="56" y="24" width="180" height="10" rx="2" fill="currentColor" fill-opacity=".1" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="3 3"/>
+                            <text x="234" y="31.5" text-anchor="end" font-size="7" font-weight="700" fill="currentColor">iFVG</text>
+                            <path class="lg-area" d="M4,52 L22,46 L40,48 L58,38 L74,30 L90,40 L108,44 L126,34 L142,20 L158,14 L174,23 L190,18 L206,10 L222,6 L236,4 L236,64 L4,64 Z" fill="url(#lgG2)"/>
+                            <path class="lg-line" pathLength="100" d="M4,52 L22,46 L40,48 L58,38 L74,30 L90,40 L108,44 L126,34 L142,20 L158,14 L174,23 L190,18 L206,10 L222,6 L236,4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="74" cy="30" r="2.5" fill="currentColor" fill-opacity=".25" stroke="#fb7185" stroke-width="1.2"/>
+                            <circle class="lg-ping" cx="174" cy="23" r="3" fill="currentColor"/>
+                            <circle cx="174" cy="23" r="2.6" fill="currentColor" stroke="#fff" stroke-opacity=".8" stroke-width="1"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- 3. Demand & Supply Zones -->
@@ -580,6 +638,27 @@
                 <p data-i18n="pillar3_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     คำนวณฐานราคาความต้องการซื้อ-ขาย (RBR, DBR, RBD, DBD) สดใหม่ ที่ราคายังไม่เคยมาเคลียร์คำสั่งซื้อขาย
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-emerald-500 dark:text-emerald-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <path d="M0 16H240M0 32H240M0 48H240" stroke="currentColor" stroke-opacity=".08"/>
+                            <rect x="55.5" y="39" width="180.5" height="13" rx="2" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-opacity=".45" stroke-dasharray="3 3"/>
+                            <text x="234" y="48.5" text-anchor="end" font-size="7" font-weight="700" fill="currentColor">DEMAND</text>
+                            <g class="lg-c" style="--i:0"><path d="M14 12V28" stroke="#94a3b8" stroke-opacity=".7"/><rect x="9.5" y="14" width="9" height="12" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:1"><path d="M37 24V43" stroke="#94a3b8" stroke-opacity=".7"/><rect x="32.5" y="26" width="9" height="14" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:2"><path d="M60 39V50" stroke="#94a3b8" stroke-opacity=".7"/><rect x="55.5" y="42" width="9" height="4" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:3"><path d="M83 41V52" stroke="currentColor"/><rect x="78.5" y="43" width="9" height="3" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:4"><path d="M106 24V46" stroke="currentColor"/><rect x="101.5" y="26" width="9" height="18" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:5"><path d="M129 14V28" stroke="currentColor"/><rect x="124.5" y="16" width="9" height="10" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:6"><path d="M152 14V30" stroke="#94a3b8" stroke-opacity=".7"/><rect x="147.5" y="16" width="9" height="12" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:7"><path d="M175 26V44" stroke="#94a3b8" stroke-opacity=".7"/><rect x="170.5" y="28" width="9" height="13" rx="1.5" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:8"><path d="M198 28V49" stroke="currentColor"/><rect x="193.5" y="30" width="9" height="12" rx="1.5" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:9"><path d="M221 12V32" stroke="currentColor"/><rect x="216.5" y="14" width="9" height="16" rx="1.5" fill="currentColor"/></g>
+                            <circle class="lg-ping" cx="198" cy="49" r="2.5" fill="currentColor"/>
+                            <circle cx="198" cy="49" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- 4. MSNR & Key SNR -->
@@ -592,6 +671,22 @@
                 <p data-i18n="pillar4_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     อ่านโครงสร้างตลาด Market Structure Shift (MSS / BOS) และเข้าเทรดเมื่อราคาย่อตัวกลับมาทดสอบแนวรับ-ต้านหลัก (SNR)
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-blue-500 dark:text-blue-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <defs><linearGradient id="lgG4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".35"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
+                            <path d="M60 4V60M120 4V60M180 4V60" stroke="currentColor" stroke-opacity=".07"/>
+                            <path d="M4 28H236" stroke="currentColor" stroke-opacity=".55" stroke-dasharray="4 3"/>
+                            <text x="6" y="24" font-size="7" font-weight="700" fill="currentColor">KEY SNR</text>
+                            <text x="132" y="12" text-anchor="middle" font-size="6.5" font-weight="800" fill="currentColor" fill-opacity=".85">BOS</text>
+                            <path class="lg-area" d="M4,46 L20,40 L36,44 L52,34 L68,38 L84,30 L100,40 L116,36 L132,22 L148,16 L164,27 L180,20 L196,12 L212,14 L236,5 L236,64 L4,64 Z" fill="url(#lgG4)"/>
+                            <path class="lg-line" pathLength="100" d="M4,46 L20,40 L36,44 L52,34 L68,38 L84,30 L100,40 L116,36 L132,22 L148,16 L164,27 L180,20 L196,12 L212,14 L236,5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="84" cy="30" r="2.5" fill="currentColor" fill-opacity=".25" stroke="#fb7185" stroke-width="1.2"/>
+                            <circle class="lg-ping" cx="164" cy="27" r="3" fill="currentColor"/>
+                            <circle cx="164" cy="27" r="2.6" fill="currentColor" stroke="#fff" stroke-opacity=".8" stroke-width="1"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- 5. Turtle Soup CRT -->
@@ -604,6 +699,25 @@
                 <p data-i18n="pillar5_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     Candle Range Theory: ดักจังหวะราคากวาด Stop Loss เหนือ/ใต้กรอบเดิม แล้วทิ้งไส้เทียนยาวดึงกลับ เพื่อเข้าปลายไส้แม่นยำสูงสุด
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-amber-500 dark:text-amber-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <path d="M4 12H236M4 44H236" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="4 3"/>
+                            <text x="4" y="9" font-size="6.5" font-weight="700" fill="currentColor">CRT HIGH</text>
+                            <text x="4" y="53" font-size="6.5" font-weight="700" fill="currentColor">CRT LOW</text>
+                            <g class="lg-c" style="--i:0"><path d="M22 12V44" stroke="currentColor"/><rect x="15" y="16" width="14" height="24" rx="2" fill="currentColor" fill-opacity=".3" stroke="currentColor"/></g>
+                            <g class="lg-c" style="--i:1"><path d="M60 14V34" stroke="#94a3b8" stroke-opacity=".7"/><rect x="53" y="16" width="14" height="14" rx="2" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:2"><path d="M98 28V58" stroke="#94a3b8" stroke-opacity=".8"/><rect x="91" y="30" width="14" height="10" rx="2" fill="#94a3b8" fill-opacity=".55"/></g>
+                            <g class="lg-c" style="--i:3"><path d="M136 28V42" stroke="currentColor"/><rect x="129" y="30" width="14" height="10" rx="2" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:4"><path d="M174 17V32" stroke="currentColor"/><rect x="167" y="19" width="14" height="11" rx="2" fill="currentColor"/></g>
+                            <g class="lg-c" style="--i:5"><path d="M212 9V21" stroke="currentColor"/><rect x="205" y="11" width="14" height="8" rx="2" fill="currentColor"/></g>
+                            <text x="108" y="57" font-size="6.5" font-weight="800" fill="#fb7185">SWEEP</text>
+                            <text x="223" y="9" font-size="6.5" font-weight="800" fill="#34d399">TP</text>
+                            <circle class="lg-ping" cx="98" cy="58" r="2.5" fill="#fb7185"/>
+                            <circle cx="98" cy="58" r="2" fill="#fb7185"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <!-- 6. Multi-Timeframe Independent Scanner -->
@@ -616,6 +730,46 @@
                 <p data-i18n="pillar6_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     สแกนแยกอิสระในแต่ละ Timeframe เข้าเป้าใน TF ใด ระบบลั่นไกส่งสัญญาณทันที พร้อมแจ้งเตือนข่าว ForexFactory ป้องกันความเสี่ยง
                 </p>
+                <div class="mt-auto pt-5">
+                    <div class="lg-chart rounded-2xl px-2 pt-2 pb-1.5 bg-white/50 dark:bg-white/[0.035] ring-1 ring-black/[0.04] dark:ring-white/[0.06] text-purple-500 dark:text-purple-400" aria-hidden="true">
+                        <svg viewBox="0 0 240 64" class="w-full h-auto block" fill="none">
+                            <g fill="currentColor">
+                                <rect class="lg-c" style="--i:0" x="15" y="44" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:1" x="15" y="35" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:2" x="15" y="26" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect x="15" y="17" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect x="15" y="8" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect class="lg-c" style="--i:1" x="63" y="44" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:2" x="63" y="35" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect x="63" y="26" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect x="63" y="17" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect x="63" y="8" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect class="lg-c" style="--i:2" x="111" y="44" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:3" x="111" y="35" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:4" x="111" y="26" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:5" x="111" y="17" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect x="111" y="8" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect class="lg-c" style="--i:3" x="159" y="44" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:4" x="159" y="35" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect class="lg-c" style="--i:5" x="159" y="26" width="26" height="6" rx="3" fill-opacity=".55"/>
+                                <rect x="159" y="17" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect x="159" y="8" width="26" height="6" rx="3" fill-opacity=".12"/>
+                                <rect class="lg-c" style="--i:4" x="207" y="44" width="26" height="6" rx="3"/>
+                                <rect class="lg-c" style="--i:5" x="207" y="35" width="26" height="6" rx="3"/>
+                                <rect class="lg-c" style="--i:6" x="207" y="26" width="26" height="6" rx="3"/>
+                                <rect class="lg-c" style="--i:7" x="207" y="17" width="26" height="6" rx="3"/>
+                                <rect class="lg-c" style="--i:8" x="207" y="8" width="26" height="6" rx="3"/>
+                            </g>
+                            <g font-size="7" font-weight="600" text-anchor="middle" fill="currentColor" fill-opacity=".75">
+                                <text x="28" y="61">H4</text><text x="76" y="61">H3</text><text x="124" y="61">H2</text><text x="172" y="61">H1</text>
+                                <text x="220" y="61" font-weight="800" fill-opacity="1">M15</text>
+                            </g>
+                            <rect class="lg-scan" x="0" y="4" width="2" height="48" rx="1" fill="currentColor" fill-opacity=".5"/>
+                            <circle class="lg-ping" cx="236" cy="5" r="2.5" fill="#34d399"/>
+                            <circle cx="236" cy="5" r="2" fill="#34d399"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -1401,6 +1555,16 @@
             const onScroll = () => island.classList.toggle('lg-scrolled', window.scrollY > 24);
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
+        })();
+
+        // 📈 Pillar mini charts: draw-in once when visible
+        (function () {
+            const charts = document.querySelectorAll('.lg-chart');
+            if (!charts.length || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+                if (e.isIntersecting) { e.target.classList.add('lg-in'); io.unobserve(e.target); }
+            }), { threshold: 0.35 });
+            charts.forEach((c) => { c.classList.add('lg-armed'); io.observe(c); });
         })();
 
         // 🌐 3-Language Dictionary (TH / LA / EN)
