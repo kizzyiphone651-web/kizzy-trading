@@ -333,9 +333,98 @@
         .lg-scan { animation: lgScan 3.6s ease-in-out infinite; }
         @keyframes lgScan { 0% { transform: translateX(4px); opacity: 0; } 12%, 88% { opacity: 0.8; } 100% { transform: translateX(232px); opacity: 0; } }
 
+        /* 🏎️ Cybertruck / Sci-Fi HUD Cards & 3D Lighting */
+        .hud-card {
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            --rx: 0deg;
+            --ry: 0deg;
+            --mx: 50%;
+            --my: 50%;
+            --sheen-op: 0;
+            transition: transform 0.55s var(--lg-spring), box-shadow 0.4s var(--lg-smooth), border-color 0.4s var(--lg-smooth);
+        }
+        /* Top Laser Lightbar */
+        .hud-laser {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+            opacity: 0.35;
+            filter: drop-shadow(0 0 6px currentColor);
+            transition: opacity 0.4s, filter 0.4s;
+            pointer-events: none;
+        }
+        .hud-card:hover .hud-laser {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 16px currentColor);
+        }
+        /* HUD Viewfinder Corner Crosshairs */
+        .hud-crosshair {
+            position: absolute;
+            inset: 10px;
+            border-radius: 18px;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, currentColor 7px, transparent 7px) 0 0,
+                linear-gradient(to bottom, currentColor 7px, transparent 7px) 0 0,
+                linear-gradient(to left, currentColor 7px, transparent 7px) 100% 0,
+                linear-gradient(to bottom, currentColor 7px, transparent 7px) 100% 0,
+                linear-gradient(to right, currentColor 7px, transparent 7px) 0 100%,
+                linear-gradient(to top, currentColor 7px, transparent 7px) 0 100%,
+                linear-gradient(to left, currentColor 7px, transparent 7px) 100% 100%,
+                linear-gradient(to top, currentColor 7px, transparent 7px) 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 7px 7px;
+            opacity: 0.22;
+            transition: opacity 0.4s var(--lg-smooth);
+        }
+        .hud-card:hover .hud-crosshair { opacity: 0.65; }
+        /* Specular metallic light tracking cursor */
+        .hud-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 70%);
+            opacity: var(--sheen-op, 0);
+            transition: opacity 0.35s var(--lg-smooth);
+            mix-blend-mode: overlay;
+        }
+        .dark .hud-glow {
+            background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 242, 254, 0.25), transparent 70%);
+            mix-blend-mode: screen;
+        }
+        /* Cybertruck Horizon Beam (Hero) */
+        .cyber-lightbar {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 2px;
+            margin: 0 auto 1.75rem;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 242, 254, 0.3) 15%, #ffffff 50%, rgba(0, 242, 254, 0.3) 85%, transparent 100%);
+            box-shadow: 0 0 14px rgba(0, 242, 254, 0.75), 0 0 28px rgba(0, 242, 254, 0.35);
+        }
+        .cyber-lightbar::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 8px;
+            border-radius: 9999px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.95), transparent 70%);
+            filter: blur(2px);
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .lg-blob, #paymentModal > div, #readerModal > div, .lg-ping, .lg-scan { animation: none !important; }
             .lg-scan { opacity: 0; }
+            .hud-card { transform: none !important; }
         }
 
         .glow-cyan {
@@ -447,6 +536,15 @@
     <section class="relative z-10 pt-20 pb-24 px-4 min-h-[80vh] flex items-center justify-center">
         <div class="max-w-4xl mx-auto text-center">
             
+            <!-- 🏎️ Cybertruck Horizon Lightbar & Telemetry HUD -->
+            <div class="cyber-lightbar"></div>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 mb-4 rounded-full text-[10px] font-mono font-bold tracking-widest text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/25 backdrop-blur-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span>CYBER_RADAR // XAUUSD ENGINE v4.2</span>
+                <span class="text-slate-400 dark:text-gray-500">|</span>
+                <span class="text-emerald-500 dark:text-emerald-400">24/7 ONLINE</span>
+            </div>
+
             <!-- Creator Avatar Badge -->
             <div class="lg-pill inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full text-cyan-700 dark:text-cyan-300 text-xs font-semibold mb-8 mac-hover-btn cursor-default">
                 <img src="logo.png" alt="Kizzy CRT" class="w-7 h-7 rounded-full ring-2 ring-cyan-400/60 object-cover">
@@ -567,11 +665,19 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             
             <!-- 1. SMC Order Block & FVG -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-cyan-500/30">
-                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 flex items-center justify-center mb-5 border border-cyan-500/30">
-                    <i data-lucide="layers" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-cyan-500/30 text-cyan-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 flex items-center justify-center border border-cyan-500/30">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-cyan-500/10 text-cyan-500 dark:text-cyan-300 border border-cyan-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>ACTIVE
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-cyan-500 font-bold uppercase tracking-wider mb-1">PILLAR 01</div>
+                <div class="text-[10px] font-mono text-cyan-500 font-bold uppercase tracking-wider mb-1">// SYS.01 :: SMC.OB+FVG</div>
                 <h3 data-i18n="pillar1_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">SMC: Order Block (OB) + FVG</h3>
                 <p data-i18n="pillar1_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     ตรวจจับการเข้าสะสมของสถาบัน (Institutional Footprint) และรอราคา Pullback เข้าทดสอบโซน Order Block ร่วมกับ Fair Value Gap
@@ -596,11 +702,19 @@
             </div>
 
             <!-- 2. Inversion FVG (iFVG) -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-teal-500/30">
-                <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-500 dark:text-teal-400 flex items-center justify-center mb-5 border border-teal-500/30">
-                    <i data-lucide="repeat" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-teal-500/30 text-teal-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-500 dark:text-teal-400 flex items-center justify-center border border-teal-500/30">
+                        <i data-lucide="repeat" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-teal-500/10 text-teal-500 dark:text-teal-300 border border-teal-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>RETEST
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-teal-500 font-bold uppercase tracking-wider mb-1">PILLAR 02</div>
+                <div class="text-[10px] font-mono text-teal-500 font-bold uppercase tracking-wider mb-1">// SYS.02 :: iFVG.SNIPER</div>
                 <h3 data-i18n="pillar2_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Inversion FVG (iFVG Support/Resistance Flip)</h3>
                 <p data-i18n="pillar2_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     โมเดลยอดนิยม: เมื่อ FVG โซนเดิมถูกทะลุอย่างรุนแรง จะพลิกหน้าที่กลายเป็นแนวรับ/ต้านใหม่ทันทีเพื่อลั่นไกสไนเปอร์
@@ -623,11 +737,19 @@
             </div>
 
             <!-- 3. Demand & Supply Zones -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-emerald-500/30">
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-5 border border-emerald-500/30">
-                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-emerald-500/30 text-emerald-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-emerald-500/10 text-emerald-500 dark:text-emerald-300 border border-emerald-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>FRESH
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-emerald-500 font-bold uppercase tracking-wider mb-1">PILLAR 03</div>
+                <div class="text-[10px] font-mono text-emerald-500 font-bold uppercase tracking-wider mb-1">// SYS.03 :: DEMAND+SUPPLY</div>
                 <h3 data-i18n="pillar3_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Demand & Supply (Fresh Base)</h3>
                 <p data-i18n="pillar3_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     คำนวณฐานราคาความต้องการซื้อ-ขาย (RBR, DBR, RBD, DBD) สดใหม่ ที่ราคายังไม่เคยมาเคลียร์คำสั่งซื้อขาย
@@ -650,11 +772,19 @@
             </div>
 
             <!-- 4. MSNR & Key SNR -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-blue-500/30">
-                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-5 border border-blue-500/30">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-blue-500/30 text-blue-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center border border-blue-500/30">
+                        <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-blue-500/10 text-blue-500 dark:text-blue-300 border border-blue-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>BOS.SNR
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-blue-500 font-bold uppercase tracking-wider mb-1">PILLAR 04</div>
+                <div class="text-[10px] font-mono text-blue-500 font-bold uppercase tracking-wider mb-1">// SYS.04 :: MSNR.STRUCTURE</div>
                 <h3 data-i18n="pillar4_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">MSNR & Key SNR (Structure Break & Retest)</h3>
                 <p data-i18n="pillar4_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     อ่านโครงสร้างตลาด Market Structure Shift (MSS / BOS) และเข้าเทรดเมื่อราคาย่อตัวกลับมาทดสอบแนวรับ-ต้านหลัก (SNR)
@@ -678,11 +808,19 @@
             </div>
 
             <!-- 5. Turtle Soup CRT -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-amber-500/30">
-                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center mb-5 border border-amber-500/30">
-                    <i data-lucide="crosshair" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-amber-500/30 text-amber-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 dark:text-amber-400 flex items-center justify-center border border-amber-500/30">
+                        <i data-lucide="crosshair" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-amber-500/10 text-amber-500 dark:text-amber-300 border border-amber-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>SWEEP
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-amber-500 font-bold uppercase tracking-wider mb-1">PILLAR 05</div>
+                <div class="text-[10px] font-mono text-amber-500 font-bold uppercase tracking-wider mb-1">// SYS.05 :: CRT.TURTLE_SOUP</div>
                 <h3 data-i18n="pillar5_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Turtle Soup CRT (Liquidity Sweep) 🐢</h3>
                 <p data-i18n="pillar5_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     Candle Range Theory: ดักจังหวะราคากวาด Stop Loss เหนือ/ใต้กรอบเดิม แล้วทิ้งไส้เทียนยาวดึงกลับ เพื่อเข้าปลายไส้แม่นยำสูงสุด
@@ -708,11 +846,19 @@
             </div>
 
             <!-- 6. Multi-Timeframe Independent Scanner -->
-            <div class="cyber-glass p-7 rounded-2xl mac-hover-card cursor-pointer border-purple-500/30">
-                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 dark:text-purple-400 flex items-center justify-center mb-5 border border-purple-500/30">
-                    <i data-lucide="clock" class="w-6 h-6"></i>
+            <div class="cyber-glass p-7 rounded-2xl mac-hover-card hud-card cursor-pointer border-purple-500/30 text-purple-500">
+                <div class="hud-laser"></div>
+                <div class="hud-crosshair"></div>
+                <div class="hud-glow"></div>
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 dark:text-purple-400 flex items-center justify-center border border-purple-500/30">
+                        <i data-lucide="clock" class="w-6 h-6"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-purple-500/10 text-purple-500 dark:text-purple-300 border border-purple-500/25">
+                        <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>5X CONFLUENCE
+                    </span>
                 </div>
-                <div class="text-[10px] font-mono text-purple-500 font-bold uppercase tracking-wider mb-1">ENGINE SPECS</div>
+                <div class="text-[10px] font-mono text-purple-500 font-bold uppercase tracking-wider mb-1">// SYS.06 :: MULTI_TF_ENGINE</div>
                 <h3 data-i18n="pillar6_title" class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Multi-TF Engine (H4, H3, H2, H1, M15)</h3>
                 <p data-i18n="pillar6_desc" class="text-slate-600 dark:text-gray-400 text-xs leading-relaxed">
                     สแกนแยกอิสระในแต่ละ Timeframe เข้าเป้าใน TF ใด ระบบลั่นไกส่งสัญญาณทันที พร้อมแจ้งเตือนข่าว ForexFactory ป้องกันความเสี่ยง
@@ -1552,6 +1698,47 @@
                 if (e.isIntersecting) { e.target.classList.add('lg-in'); io.unobserve(e.target); }
             }), { threshold: 0.35 });
             charts.forEach((c) => { c.classList.add('lg-armed'); io.observe(c); });
+        })();
+
+        // 🏎️ 3D Card Tilt & Specular Light (Cybertruck Motion Physics)
+        (function () {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const cards = document.querySelectorAll('.hud-card');
+            if (!cards.length) return;
+
+            cards.forEach((card) => {
+                let rafId = null;
+                const onMove = (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const clientX = e.clientX;
+                    const clientY = e.clientY;
+                    if (clientX == null || clientY == null) return;
+
+                    const x = (clientX - rect.left) / rect.width - 0.5;
+                    const y = (clientY - rect.top) / rect.height - 0.5;
+                    const rx = (-y * 9).toFixed(2);
+                    const ry = (x * 9).toFixed(2);
+                    const px = ((x + 0.5) * 100).toFixed(1);
+                    const py = ((y + 0.5) * 100).toFixed(1);
+
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => {
+                        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px) scale3d(1.02, 1.02, 1.02)`;
+                        card.style.setProperty('--mx', `${px}%`);
+                        card.style.setProperty('--my', `${py}%`);
+                        card.style.setProperty('--sheen-op', '1');
+                    });
+                };
+
+                const onLeave = () => {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    card.style.transform = '';
+                    card.style.setProperty('--sheen-op', '0');
+                };
+
+                card.addEventListener('mousemove', onMove, { passive: true });
+                card.addEventListener('mouseleave', onLeave, { passive: true });
+            });
         })();
 
         // 🌐 3-Language Dictionary (TH / LA / EN)
