@@ -115,18 +115,17 @@
             transform-style: preserve-3d;
             perspective: 1200px;
             will-change: transform;
-            transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
 
         .hero-bg-img {
             max-height: 85vh !important;
             width: auto !important;
             object-fit: contain !important;
-            filter: drop-shadow(0 0 80px rgba(0,242,254,0.5)) drop-shadow(0 0 140px rgba(0,242,254,0.3)) !important;
+            filter: drop-shadow(0 0 50px rgba(0,242,254,0.45)) !important;
             opacity: 0.42 !important;
             transform-style: preserve-3d;
             animation: heroHoloBreath 7s ease-in-out infinite alternate;
-            will-change: transform, filter;
+            will-change: transform, opacity;
         }
 
         .hero-crt-candle {
@@ -142,7 +141,7 @@
             animation-delay: -1.5s;
         }
         .hero-crt-candle-left svg {
-            filter: drop-shadow(0 0 22px rgba(0, 242, 254, 0.8));
+            filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.75));
         }
         .hero-crt-candle-right {
             right: clamp(-180px, -15vw, -60px);
@@ -151,21 +150,21 @@
             animation-delay: -3.5s;
         }
         .hero-crt-candle-right svg {
-            filter: drop-shadow(0 0 22px rgba(52, 211, 153, 0.8));
+            filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.75));
         }
 
         @keyframes heroHoloBreath {
             0% {
-                transform: translateY(28px) scale(0.98) rotateX(2deg) rotateY(-2deg);
-                filter: drop-shadow(0 0 60px rgba(0, 242, 254, 0.4)) drop-shadow(0 0 100px rgba(0, 242, 254, 0.2));
+                transform: translateY(24px) scale(0.98) rotateX(2deg) rotateY(-2deg);
+                opacity: 0.36;
             }
             50% {
-                transform: translateY(14px) scale(1.025) rotateX(-2deg) rotateY(2deg);
-                filter: drop-shadow(0 0 95px rgba(0, 242, 254, 0.7)) drop-shadow(0 0 160px rgba(0, 242, 254, 0.4));
+                transform: translateY(12px) scale(1.02) rotateX(-2deg) rotateY(2deg);
+                opacity: 0.50;
             }
             100% {
-                transform: translateY(28px) scale(0.98) rotateX(2deg) rotateY(-2deg);
-                filter: drop-shadow(0 0 60px rgba(0, 242, 254, 0.4)) drop-shadow(0 0 100px rgba(0, 242, 254, 0.2));
+                transform: translateY(24px) scale(0.98) rotateX(2deg) rotateY(-2deg);
+                opacity: 0.36;
             }
         }
 
@@ -187,7 +186,7 @@
         :root {
             --lg-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
             --lg-smooth: cubic-bezier(0.22, 1, 0.36, 1);
-            --lg-blur: blur(28px) saturate(190%);
+            --lg-blur: blur(16px) saturate(160%);
         }
 
         /* 🌈 Fluid chromatic mesh base (Light / Dark) — painted once on the fixed layer */
@@ -204,16 +203,13 @@
                 radial-gradient(55% 50% at 50% 100%, rgba(13, 148, 136, 0.18), transparent 60%);
         }
 
-        /* Drifting liquid aurora blobs — pre-softened gradients (no live filter blur) */
-        .lg-blob { position: absolute; border-radius: 9999px; will-change: transform; }
-        .lg-blob-1 { background: radial-gradient(circle, rgba(34, 211, 238, 0.20) 0%, rgba(34, 211, 238, 0.07) 40%, transparent 70%); animation: lgDrift1 22s ease-in-out infinite; }
-        .lg-blob-2 { background: radial-gradient(circle, rgba(45, 212, 191, 0.16) 0%, rgba(45, 212, 191, 0.05) 40%, transparent 70%); animation: lgDrift2 28s ease-in-out infinite; }
-        .lg-blob-3 { background: radial-gradient(circle, rgba(167, 139, 250, 0.16) 0%, rgba(167, 139, 250, 0.05) 40%, transparent 70%); animation: lgDrift3 34s ease-in-out infinite; }
-        .lg-blob-4 { background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.05) 40%, transparent 70%); animation: lgDrift2 40s ease-in-out infinite reverse; }
+        /* Ambient liquid aurora blobs — lightweight static gradients (no CPU/GPU drift thrashing) */
+        .lg-blob { position: absolute; border-radius: 9999px; pointer-events: none; }
+        .lg-blob-1 { background: radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.05) 40%, transparent 70%); }
+        .lg-blob-2 { background: radial-gradient(circle, rgba(45, 212, 191, 0.14) 0%, rgba(45, 212, 191, 0.04) 40%, transparent 70%); }
+        .lg-blob-3 { background: radial-gradient(circle, rgba(167, 139, 250, 0.14) 0%, rgba(167, 139, 250, 0.04) 40%, transparent 70%); }
+        .lg-blob-4 { background: radial-gradient(circle, rgba(56, 189, 248, 0.13) 0%, rgba(56, 189, 248, 0.04) 40%, transparent 70%); }
         .lg-blob-1 { transform: translateX(-50%); }
-        @keyframes lgDrift1 { 0%,100% { transform: translate(-50%, 0) scale(1); } 50% { transform: translate(-42%, 60px) scale(1.12); } }
-        @keyframes lgDrift2 { 0%,100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(80px, -50px) scale(1.15); } }
-        @keyframes lgDrift3 { 0%,100% { transform: translate(0, 0) scale(1.05); } 50% { transform: translate(-90px, -40px) scale(0.92); } }
 
         /* 📱 Lighter tier for phones & tablets (keeps the look, halves the GPU cost) */
         @media (max-width: 768px) {
@@ -274,19 +270,20 @@
         /* 🏝️ Dynamic Island floating navigation */
         .lg-island {
             position: relative;
-            background-color: rgba(255, 255, 255, 0.6);
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.15));
-            backdrop-filter: blur(32px) saturate(200%);
-            -webkit-backdrop-filter: blur(32px) saturate(200%);
+            background-color: rgba(255, 255, 255, 0.65);
+            background-image: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2));
+            backdrop-filter: blur(20px) saturate(170%);
+            -webkit-backdrop-filter: blur(20px) saturate(170%);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow:
                 inset 0 1px 1px rgba(255,255,255,1),
                 inset 0 -1px 1px rgba(15,23,42,0.05),
                 0 18px 50px -18px rgba(15, 40, 80, 0.35);
-            transition: all 0.5s var(--lg-smooth);
+            transition: transform 0.25s ease-out, background-color 0.25s ease-out, box-shadow 0.25s ease-out;
+            will-change: transform;
         }
         .dark .lg-island {
-            background-color: rgba(10, 16, 32, 0.55);
+            background-color: rgba(10, 16, 32, 0.65);
             background-image: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
             border-color: rgba(255, 255, 255, 0.12);
             box-shadow:
@@ -504,6 +501,7 @@
 
         /* 🌊 Infinite Horizontal Carousel Fade Edges */
         .fade-mask {
+            contain: paint;
             mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
         }
@@ -1784,13 +1782,27 @@
 
         initTheme();
 
-        // 🏝️ Dynamic Island: subtle contraction on scroll
+        // 🏝️ Dynamic Island: subtle contraction on scroll (RAF throttled)
         (function () {
             const island = document.getElementById('lgIsland');
             if (!island) return;
-            const onScroll = () => island.classList.toggle('lg-scrolled', window.scrollY > 24);
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
+            let ticking = false;
+            let isScrolled = false;
+            const updateScroll = () => {
+                const scrolled = window.scrollY > 24;
+                if (scrolled !== isScrolled) {
+                    isScrolled = scrolled;
+                    island.classList.toggle('lg-scrolled', isScrolled);
+                }
+                ticking = false;
+            };
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
+            updateScroll();
         })();
 
         // 📈 Pillar mini charts: draw-in once when visible
@@ -1852,17 +1864,43 @@
             let targetRx = 0, targetRy = 0, targetTx = 0, targetTy = 0;
             let currentRx = 0, currentRy = 0, currentTx = 0, currentTy = 0;
             let rafId = null;
+            let isHeroVisible = true;
+
+            // Pause calculations & hide stage when hero is out of view (saves 100% GPU when scrolling below)
+            if ('IntersectionObserver' in window) {
+                const heroSection = document.querySelector('section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isHeroVisible = entry.isIntersecting;
+                        if (!isHeroVisible) {
+                            stage.style.visibility = 'hidden';
+                            if (rafId) {
+                                cancelAnimationFrame(rafId);
+                                rafId = null;
+                            }
+                        } else {
+                            stage.style.visibility = 'visible';
+                            if (!rafId) rafId = requestAnimationFrame(render);
+                        }
+                    });
+                }, { threshold: 0.05 });
+                if (heroSection) observer.observe(heroSection);
+            }
 
             function render() {
-                currentRx += (targetRx - currentRx) * 0.06;
-                currentRy += (targetRy - currentRy) * 0.06;
-                currentTx += (targetTx - currentTx) * 0.06;
-                currentTy += (targetTy - currentTy) * 0.06;
+                if (!isHeroVisible) {
+                    rafId = null;
+                    return;
+                }
+                currentRx += (targetRx - currentRx) * 0.08;
+                currentRy += (targetRy - currentRy) * 0.08;
+                currentTx += (targetTx - currentTx) * 0.08;
+                currentTy += (targetTy - currentTy) * 0.08;
 
-                stage.style.transform = `perspective(1000px) translate3d(${currentTx.toFixed(2)}px, ${currentTy.toFixed(2)}px, 0px) rotateX(${currentRx.toFixed(2)}deg) rotateY(${currentRy.toFixed(2)}deg)`;
+                stage.style.transform = `perspective(1000px) translate3d(${currentTx.toFixed(1)}px, ${currentTy.toFixed(1)}px, 0px) rotateX(${currentRx.toFixed(1)}deg) rotateY(${currentRy.toFixed(1)}deg)`;
 
-                if (Math.abs(targetRx - currentRx) > 0.01 || Math.abs(targetRy - currentRy) > 0.01 ||
-                    Math.abs(targetTx - currentTx) > 0.01 || Math.abs(targetTy - currentTy) > 0.01) {
+                if (Math.abs(targetRx - currentRx) > 0.05 || Math.abs(targetRy - currentRy) > 0.05 ||
+                    Math.abs(targetTx - currentTx) > 0.1 || Math.abs(targetTy - currentTy) > 0.1) {
                     rafId = requestAnimationFrame(render);
                 } else {
                     rafId = null;
@@ -1870,20 +1908,21 @@
             }
 
             window.addEventListener('mousemove', (e) => {
+                if (!isHeroVisible) return;
                 const cx = window.innerWidth / 2;
                 const cy = window.innerHeight / 2;
                 const x = (e.clientX - cx) / cx;
                 const y = (e.clientY - cy) / cy;
-                targetRx = -y * 8;
-                targetRy = x * 10;
-                targetTx = x * 18;
-                targetTy = y * 12;
+                targetRx = -y * 7;
+                targetRy = x * 9;
+                targetTx = x * 15;
+                targetTy = y * 10;
                 if (!rafId) rafId = requestAnimationFrame(render);
             }, { passive: true });
 
             window.addEventListener('mouseleave', () => {
                 targetRx = 0; targetRy = 0; targetTx = 0; targetTy = 0;
-                if (!rafId) rafId = requestAnimationFrame(render);
+                if (!rafId && isHeroVisible) rafId = requestAnimationFrame(render);
             });
         })();
 
