@@ -107,13 +107,100 @@
             overflow: hidden !important;
         }
 
+        .hero-3d-stage {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            perspective: 1200px;
+            will-change: transform;
+        }
+
         .hero-bg-img {
             max-height: 85vh !important;
             width: auto !important;
             object-fit: contain !important;
-            filter: drop-shadow(0 0 100px rgba(0,242,254,0.45)) !important;
-            transform: translateY(24px) !important;
-            opacity: 0.35 !important;
+            filter: drop-shadow(0 0 45px rgba(0,242,254,0.45)) !important;
+            opacity: 0.42 !important;
+            transform-style: preserve-3d;
+            animation: heroHoloBreath 7s ease-in-out infinite alternate;
+            will-change: transform, opacity;
+        }
+
+        .hero-crt-candle {
+            position: absolute;
+            pointer-events: none;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .hero-crt-candle-left {
+            left: clamp(-180px, -15vw, -60px);
+            top: 22%;
+            animation: heroCandleLeftFloat 6s ease-in-out infinite alternate;
+            animation-delay: -1.5s;
+        }
+        .hero-crt-candle-left svg {
+            filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.75));
+        }
+        .hero-crt-candle-right {
+            right: clamp(-180px, -15vw, -60px);
+            top: 18%;
+            animation: heroCandleRightFloat 7s ease-in-out infinite alternate;
+            animation-delay: -3.5s;
+        }
+        .hero-crt-candle-right svg {
+            filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.75));
+        }
+
+        @keyframes heroHoloBreath {
+            0% {
+                transform: translateY(22px) scale(0.98) rotateX(2deg) rotateY(-2deg);
+                opacity: 0.36;
+            }
+            50% {
+                transform: translateY(10px) scale(1.02) rotateX(-2deg) rotateY(2deg);
+                opacity: 0.50;
+            }
+            100% {
+                transform: translateY(22px) scale(0.98) rotateX(2deg) rotateY(-2deg);
+                opacity: 0.36;
+            }
+        }
+
+        @keyframes heroCandleLeftFloat {
+            0% { transform: translate3d(0, 0px, 45px) rotateZ(-2deg) rotateY(8deg) scale(0.96); }
+            50% { transform: translate3d(0, -22px, 65px) rotateZ(2deg) rotateY(-6deg) scale(1.04); }
+            100% { transform: translate3d(0, 0px, 45px) rotateZ(-2deg) rotateY(8deg) scale(0.96); }
+        }
+
+        @keyframes heroCandleRightFloat {
+            0% { transform: translate3d(0, 0px, 40px) rotateZ(2deg) rotateY(-8deg) scale(0.96); }
+            50% { transform: translate3d(0, -20px, 60px) rotateZ(-2deg) rotateY(6deg) scale(1.04); }
+            100% { transform: translate3d(0, 0px, 40px) rotateZ(2deg) rotateY(-8deg) scale(0.96); }
+        }
+
+        /* 🏎️ Cybertruck Horizon Lightbar (Hero) */
+        .cyber-lightbar {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 2px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 242, 254, 0.3) 15%, #ffffff 50%, rgba(0, 242, 254, 0.3) 85%, transparent 100%);
+            box-shadow: 0 0 14px rgba(0, 242, 254, 0.75), 0 0 28px rgba(0, 242, 254, 0.35);
+        }
+        .cyber-lightbar::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 8px;
+            border-radius: 9999px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.95), transparent 70%);
+            filter: blur(2px);
         }
 
         /* ============================================================
@@ -122,7 +209,7 @@
         :root {
             --lg-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
             --lg-smooth: cubic-bezier(0.22, 1, 0.36, 1);
-            --lg-blur: blur(28px) saturate(190%);
+            --lg-blur: blur(18px) saturate(170%);
         }
 
         /* 🌈 Fluid chromatic mesh base (Light / Dark) — painted once on the fixed layer */
@@ -383,9 +470,42 @@
         <!-- High-Tech Cyber Grid Overlay -->
         <div class="absolute inset-0 bg-[linear-gradient(to_right,#00f2fe0d_1px,transparent_1px),linear-gradient(to_bottom,#00f2fe0d_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 
-        <!-- 👤 FIXED SILHOUETTE + CYBER BARS IMAGE -->
-        <div class="absolute inset-0 flex items-center justify-center">
-            <img src="hero_portrait.png" alt="Kizzy Master Silhouette" class="hero-bg-img">
+        <!-- 👤 FIXED 3D SILHOUETTE + 3D CRT CANDLESTICKS -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div id="hero3DStage" class="hero-3d-stage">
+                <!-- 🕯️ 3D Floating Bullish CRT Candle (Left - Desktop/Tablet) -->
+                <div class="hero-crt-candle hero-crt-candle-left hidden md:block">
+                    <svg width="64" height="220" viewBox="0 0 64 220" fill="none">
+                        <line x1="32" y1="10" x2="32" y2="210" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+                        <rect x="16" y="55" width="32" height="110" rx="5" fill="url(#heroCrtLeftGrad)" stroke="#00f2fe" stroke-width="2"/>
+                        <circle cx="32" cy="10" r="3" fill="#00f2fe" opacity="0.9"/>
+                        <defs>
+                            <linearGradient id="heroCrtLeftGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.15"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <!-- 👤 Kizzy Silhouette Portrait -->
+                <img src="hero_portrait.png" alt="Kizzy Master Silhouette" class="hero-bg-img" id="heroPortraitImg">
+
+                <!-- 🕯️ 3D Floating Bearish/Sweep CRT Candle (Right - Desktop/Tablet) -->
+                <div class="hero-crt-candle hero-crt-candle-right hidden md:block">
+                    <svg width="64" height="220" viewBox="0 0 64 220" fill="none">
+                        <line x1="32" y1="20" x2="32" y2="200" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+                        <rect x="16" y="40" width="32" height="130" rx="5" fill="url(#heroCrtRightGrad)" stroke="#34d399" stroke-width="2"/>
+                        <circle cx="32" cy="200" r="3" fill="#34d399" opacity="0.9"/>
+                        <defs>
+                            <linearGradient id="heroCrtRightGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#34d399" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#059669" stop-opacity="0.15"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -447,17 +567,31 @@
     <section class="relative z-10 pt-20 pb-24 px-4 min-h-[80vh] flex items-center justify-center">
         <div class="max-w-4xl mx-auto text-center">
             
-            <!-- Creator Avatar Badge -->
-            <div class="lg-pill inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full text-cyan-700 dark:text-cyan-300 text-xs font-semibold mb-8 mac-hover-btn cursor-default">
+            <!-- 1. Creator Avatar Badge (บนสุด) -->
+            <div class="lg-pill inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full text-cyan-700 dark:text-cyan-300 text-xs font-semibold mb-3 mac-hover-btn cursor-default">
                 <img src="logo.png" alt="Kizzy CRT" class="w-7 h-7 rounded-full ring-2 ring-cyan-400/60 object-cover">
                 <span>Created by <strong class="text-slate-900 dark:text-white">Kizzy (CRT Master)</strong></span>
                 <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500 dark:bg-cyan-400"></span></span>
             </div>
 
+            <!-- 2. Cyber Radar (ไว้ล่าง Created by Kizzy) -->
+            <div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 mb-8 rounded-full text-[10px] font-mono font-bold tracking-widest text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/25 backdrop-blur-md">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span>CYBER_RADAR // XAUUSD ENGINE v4.2</span>
+                    <span class="text-slate-400 dark:text-gray-500">|</span>
+                    <span class="text-emerald-500 dark:text-emerald-400">24/7 ONLINE</span>
+                </div>
+            </div>
+
+            <!-- 3. ข้อความหัวเรื่อง (Heading) -->
             <h1 id="hero-title" class="text-4xl sm:text-7xl font-black tracking-tight leading-tight mb-6 text-slate-900 dark:text-white">
                 เทรดตามรอย <span class="bg-gradient-to-r from-cyan-600 dark:from-cyan-400 via-teal-500 dark:via-teal-300 to-blue-600 dark:to-white bg-clip-text text-transparent text-glow">Smart Money</span><br>
                 ด้วยสัญญาณ AI ส่งตรงเข้า <span class="text-sky-500 dark:text-sky-400 font-black">Telegram</span> & <span class="text-indigo-600 dark:text-indigo-400 font-black">Discord</span>
             </h1>
+
+            <!-- 4. 🏎️ ไฟไซเบอร์ไว้ล่างข้อความ (Cyber Horizon Lightbar) -->
+            <div class="cyber-lightbar my-7"></div>
 
             <!-- 🚀 Telegram & Discord Dual Channel Badges -->
             <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
@@ -1510,7 +1644,9 @@
 
     <!-- 🌐 3-LANGUAGE DICTIONARY & COMPREHENSIVE ACADEMY DATA (KIZZY MASTER OF DEMAND 23 SLIDES, CANDLE, CRT) -->
     <script>
-        lucide.createIcons();
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+            lucide.createIcons();
+        }
 
         // ☀️/🌙 Dark & Light Mode Controller with LocalStorage
         function initTheme() {
@@ -1530,18 +1666,34 @@
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             }
-            lucide.createIcons();
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         initTheme();
 
-        // 🏝️ Dynamic Island: subtle contraction on scroll
+        // 🏝️ Dynamic Island: subtle contraction on scroll (RAF throttled)
         (function () {
             const island = document.getElementById('lgIsland');
             if (!island) return;
-            const onScroll = () => island.classList.toggle('lg-scrolled', window.scrollY > 24);
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
+            let ticking = false;
+            let isScrolled = false;
+            const updateScroll = () => {
+                const scrolled = window.scrollY > 24;
+                if (scrolled !== isScrolled) {
+                    isScrolled = scrolled;
+                    island.classList.toggle('lg-scrolled', isScrolled);
+                }
+                ticking = false;
+            };
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
+            updateScroll();
         })();
 
         // 📈 Pillar mini charts: draw-in once when visible
@@ -1552,6 +1704,71 @@
                 if (e.isIntersecting) { e.target.classList.add('lg-in'); io.unobserve(e.target); }
             }), { threshold: 0.35 });
             charts.forEach((c) => { c.classList.add('lg-armed'); io.observe(c); });
+        })();
+
+        // 👤 3D Floating Hero Parallax (Desktop Only — Auto-bypassed on Mobile Touch)
+        (function () {
+            // Touch/Mobile devices use hardware-accelerated CSS keyframes; skip JS loop completely!
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const stage = document.getElementById('hero3DStage');
+            if (!stage) return;
+            let targetRx = 0, targetRy = 0, targetTx = 0, targetTy = 0;
+            let currentRx = 0, currentRy = 0, currentTx = 0, currentTy = 0;
+            let rafId = null;
+            let isHeroVisible = true;
+
+            if ('IntersectionObserver' in window) {
+                const heroSection = document.querySelector('section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isHeroVisible = entry.isIntersecting;
+                        if (!isHeroVisible && rafId) {
+                            cancelAnimationFrame(rafId);
+                            rafId = null;
+                        } else if (isHeroVisible && !rafId) {
+                            rafId = requestAnimationFrame(render);
+                        }
+                    });
+                }, { threshold: 0.05 });
+                if (heroSection) observer.observe(heroSection);
+            }
+
+            function render() {
+                if (!isHeroVisible) { rafId = null; return; }
+                currentRx += (targetRx - currentRx) * 0.08;
+                currentRy += (targetRy - currentRy) * 0.08;
+                currentTx += (targetTx - currentTx) * 0.08;
+                currentTy += (targetTy - currentTy) * 0.08;
+
+                stage.style.transform = `perspective(1000px) translate3d(${currentTx.toFixed(1)}px, ${currentTy.toFixed(1)}px, 0px) rotateX(${currentRx.toFixed(1)}deg) rotateY(${currentRy.toFixed(1)}deg)`;
+
+                if (Math.abs(targetRx - currentRx) > 0.05 || Math.abs(targetRy - currentRy) > 0.05 ||
+                    Math.abs(targetTx - currentTx) > 0.1 || Math.abs(targetTy - currentTy) > 0.1) {
+                    rafId = requestAnimationFrame(render);
+                } else {
+                    rafId = null;
+                }
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isHeroVisible) return;
+                const cx = window.innerWidth / 2;
+                const cy = window.innerHeight / 2;
+                const x = (e.clientX - cx) / cx;
+                const y = (e.clientY - cy) / cy;
+                targetRx = -y * 7;
+                targetRy = x * 9;
+                targetTx = x * 15;
+                targetTy = y * 10;
+                if (!rafId) rafId = requestAnimationFrame(render);
+            }, { passive: true });
+
+            window.addEventListener('mouseleave', () => {
+                targetRx = 0; targetRy = 0; targetTx = 0; targetTy = 0;
+                if (!rafId && isHeroVisible) rafId = requestAnimationFrame(render);
+            });
         })();
 
         // 🌐 3-Language Dictionary (TH / LA / EN)
