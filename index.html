@@ -48,53 +48,25 @@
       }
     }
     </script>
-    <!-- Tailwind (CDN JIT — generates every class used on this page) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Local Precompiled Tailwind CSS v3 (Ultra-Fast 50KB — Zero CDN Stall on Mobile) -->
+    <link rel="stylesheet" href="tailwind.min.css">
     <!-- Google Fonts (Prompt, Noto Sans Lao & Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+Lao:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons (pinned local v1.38 — no external dependency) -->
     <script src="lucide.min.js"></script>
-    <script>
-        if (window.tailwind) {
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ['Prompt', 'Noto Sans Lao', 'Inter', 'sans-serif'],
-                        },
-                        colors: {
-                            cyanNeon: '#00F2FE',
-                            tealNeon: '#4FACFE',
-                            aquaGlow: '#00E5FF',
-                        },
-                        animation: {
-                            'float-slow': 'floatSlow 5s ease-in-out infinite',
-                            'marquee': 'marquee 25s linear infinite',
-                            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
-                        },
-                        keyframes: {
-                            floatSlow: {
-                                '0%, 100%': { transform: 'translateY(0px)' },
-                                '50%': { transform: 'translateY(-10px)' },
-                            },
-                            pulseGlow: {
-                                '0%, 100%': { opacity: '0.4' },
-                                '50%': { opacity: '0.75' },
-                            },
-                            marquee: {
-                                '0%': { transform: 'translateX(0%)' },
-                                '100%': { transform: 'translateX(-50%)' },
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
+        /* 🛡️ Strict Modal Hidden Fallbacks (Prevents Black Overlay Glitches) */
+        #readerModal.hidden,
+        #paymentModal.hidden {
+            display: none !important;
+        }
+        #readerModal:not(.hidden),
+        #paymentModal:not(.hidden) {
+            display: flex !important;
+        }
+
         /* 🛡️ Critical Layout Fallbacks (Prevents Adblocker / CDN Glitches) */
         .fixed-bg-container {
             position: fixed !important;
@@ -133,6 +105,7 @@
             pointer-events: none;
             transform-style: preserve-3d;
             will-change: transform;
+            z-index: 10;
         }
         .hero-crt-candle-left {
             left: clamp(-180px, -15vw, -60px);
@@ -151,6 +124,24 @@
         }
         .hero-crt-candle-right svg {
             filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.75));
+        }
+
+        /* 📱 Mobile 3D Candlesticks: Visible & Beautifully Scaled on Phones */
+        @media (max-width: 768px) {
+            .hero-crt-candle-left {
+                left: -15px !important;
+                top: 28% !important;
+                opacity: 0.88;
+            }
+            .hero-crt-candle-right {
+                right: -15px !important;
+                top: 24% !important;
+                opacity: 0.88;
+            }
+            .hero-crt-candle svg {
+                width: 36px !important;
+                height: 130px !important;
+            }
         }
 
         @keyframes heroHoloBreath {
@@ -473,8 +464,8 @@
         <!-- 👤 FIXED 3D SILHOUETTE + 3D CRT CANDLESTICKS -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div id="hero3DStage" class="hero-3d-stage">
-                <!-- 🕯️ 3D Floating Bullish CRT Candle (Left - Desktop/Tablet) -->
-                <div class="hero-crt-candle hero-crt-candle-left hidden md:block">
+                <!-- 🕯️ 3D Floating Bullish CRT Candle (Left) -->
+                <div class="hero-crt-candle hero-crt-candle-left block">
                     <svg width="64" height="220" viewBox="0 0 64 220" fill="none">
                         <line x1="32" y1="10" x2="32" y2="210" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
                         <rect x="16" y="55" width="32" height="110" rx="5" fill="url(#heroCrtLeftGrad)" stroke="#00f2fe" stroke-width="2"/>
@@ -491,8 +482,8 @@
                 <!-- 👤 Kizzy Silhouette Portrait -->
                 <img src="hero_portrait.png" alt="Kizzy Master Silhouette" class="hero-bg-img" id="heroPortraitImg">
 
-                <!-- 🕯️ 3D Floating Bearish/Sweep CRT Candle (Right - Desktop/Tablet) -->
-                <div class="hero-crt-candle hero-crt-candle-right hidden md:block">
+                <!-- 🕯️ 3D Floating Bearish/Sweep CRT Candle (Right) -->
+                <div class="hero-crt-candle hero-crt-candle-right block">
                     <svg width="64" height="220" viewBox="0 0 64 220" fill="none">
                         <line x1="32" y1="20" x2="32" y2="200" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
                         <rect x="16" y="40" width="32" height="130" rx="5" fill="url(#heroCrtRightGrad)" stroke="#34d399" stroke-width="2"/>
@@ -1277,7 +1268,7 @@
     </section>
 
     <!-- 📖 INTERACTIVE MODAL READER (รองรับทั้ง Master of Demand Supply 30 หน้าเต็ม (The End), Candlestick, และ CRT) -->
-    <div id="readerModal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-xl z-50 hidden flex items-center justify-center p-4" oncontextmenu="return false;">
+    <div id="readerModal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-xl z-50 hidden items-center justify-center p-4" style="display: none;" oncontextmenu="return false;">
         <div class="cyber-glass max-w-3xl w-full rounded-2xl relative flex flex-col max-h-[92vh] shadow-2xl glow-cyan">
             
             <!-- Modal Header -->
@@ -1562,7 +1553,7 @@
     </section>
 
     <!-- Payment Modal (BCEL ONE LAO QR Cyber Edition) -->
-    <div id="paymentModal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-xl z-50 hidden flex items-center justify-center p-4">
+    <div id="paymentModal" class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-xl z-50 hidden items-center justify-center p-4" style="display: none;">
         <div class="cyber-glass max-w-md w-full rounded-2xl p-6 relative max-h-[90vh] overflow-y-auto glow-cyan">
             <button onclick="closePaymentModal()" class="lg-pill absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-gray-300 hover:text-black dark:hover:text-white mac-hover-btn">
                 <i data-lucide="x" class="w-5 h-5"></i>
@@ -2648,8 +2639,12 @@
             readerMode = mode;
             readerIndex = pageNum - 1;
             renderReaderPage();
-            document.getElementById('readerModal').classList.remove('hidden');
-            lucide.createIcons();
+            const rm = document.getElementById('readerModal');
+            rm.style.display = 'flex';
+            rm.classList.remove('hidden');
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         function renderReaderPage() {
@@ -2761,7 +2756,9 @@
         }
 
         function closeReader() {
-            document.getElementById('readerModal').classList.add('hidden');
+            const rm = document.getElementById('readerModal');
+            rm.style.display = 'none';
+            rm.classList.add('hidden');
         }
 
         function openPaymentModal(title, priceFormatted) {
@@ -2772,11 +2769,15 @@
             document.getElementById('btnWhatsAppSend').href = `https://wa.me/8562097858965?text=${textMsg}`;
             document.getElementById('btnFacebookSend').href = `https://www.facebook.com/kizzy.lizzy.327420/`;
             
-            document.getElementById('paymentModal').classList.remove('hidden');
+            const pm = document.getElementById('paymentModal');
+            pm.style.display = 'flex';
+            pm.classList.remove('hidden');
         }
 
         function closePaymentModal() {
-            document.getElementById('paymentModal').classList.add('hidden');
+            const pm = document.getElementById('paymentModal');
+            pm.style.display = 'none';
+            pm.classList.add('hidden');
         }
 
         // =========================================================================
