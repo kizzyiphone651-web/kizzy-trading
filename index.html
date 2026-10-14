@@ -912,10 +912,10 @@
                 <span data-i18n="news_badge">FOREX FACTORY REAL-TIME RADAR</span>
             </div>
             <h2 data-i18n="news_title" class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                ศูนย์วิเคราะห์ข่าวกล่องแดง & กล่องส้ม เรียลไทม์
+                ศูนย์วิเคราะห์ข่าวกล่องแดงทองคำ เรียลไทม์
             </h2>
             <p data-i18n="news_subtitle" class="text-slate-600 dark:text-gray-300 text-sm sm:text-base max-w-3xl mx-auto mt-3 leading-relaxed">
-                ระบบติดตามข่าวสดประจำวันแบบ Real-Time คัดเฉพาะข่าวที่ส่งผลกระทบต่อราคาทองคำ (XAUUSD) พร้อมกลยุทธ์ตามรอย Smart Money
+                ระบบติดตามข่าวกล่องแดงประจำวันแบบ Real-Time คัดเฉพาะข่าวที่ส่งผลกระทบต่อราคาทองคำ (XAUUSD / USD) พร้อมกลยุทธ์ตามรอย Smart Money
             </p>
 
             <!-- 🎛️ Primary Period Navigation Tabs -->
@@ -935,19 +935,13 @@
                 </button>
             </div>
 
-            <!-- 🔍 Sub-Controls: Impact Filters & Live Refresh Bar -->
-            <div id="liveSubControls" class="flex flex-wrap items-center justify-between gap-3 mt-6 max-w-3xl mx-auto p-2.5 rounded-2xl cyber-glass border border-slate-200 dark:border-gray-800 text-xs">
-                <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-slate-500 dark:text-gray-400 font-semibold px-2">ตัวกรอง:</span>
-                    <button onclick="setImpactFilter('all')" id="filter-impact-all" class="impact-filter-btn active-filter px-3 py-1.5 rounded-xl font-bold bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/40">
-                        <span data-i18n="news_filter_all">ทั้งหมด</span>
-                    </button>
-                    <button onclick="setImpactFilter('high')" id="filter-impact-high" class="impact-filter-btn px-3 py-1.5 rounded-xl font-bold text-slate-600 dark:text-gray-300 hover:text-rose-500 transition">
-                        <span data-i18n="news_filter_red">🔴 กล่องแดง (High)</span>
-                    </button>
-                    <button onclick="setImpactFilter('medium')" id="filter-impact-medium" class="impact-filter-btn px-3 py-1.5 rounded-xl font-bold text-slate-600 dark:text-gray-300 hover:text-amber-500 transition">
-                        <span data-i18n="news_filter_orange">🟠 กล่องส้ม (Medium)</span>
-                    </button>
+            <!-- 🔍 Sub-Controls: Gold Red Radar Badge & Live Refresh Bar -->
+            <div id="liveSubControls" class="flex flex-wrap items-center justify-between gap-3 mt-6 max-w-3xl mx-auto p-2.5 rounded-2xl cyber-glass border border-rose-500/30 text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-500 font-extrabold flex items-center gap-1.5 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        <span data-i18n="news_gold_red_tag">🔴 เรดาร์เฉพาะข่าวกล่องแดงทองคำ (XAUUSD / USD)</span>
+                    </span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span id="lastUpdatedTimeText" class="text-[11px] font-mono text-slate-400">อัปเดตสด</span>
@@ -1857,15 +1851,13 @@
                 footer_warning: "คำเตือนความเสี่ยง: การเทรด Forex, ทองคำ และดัชนีมีความเสี่ยงสูง ข้อมูลและสัญญาณจากระบบนี้จัดทำขึ้นเพื่อการวิเคราะห์ทางเทคนิคและการศึกษาเท่านั้น ผู้ลงทุนควรศึกษาและบริหารความเสี่ยงด้วยตนเอง",
                 nav_news: "วิเคราะห์ข่าวเรียลไทม์",
                 news_badge: "FOREX FACTORY REAL-TIME RADAR",
-                news_title: "ศูนย์วิเคราะห์ข่าวกล่องแดง & กล่องส้ม เรียลไทม์",
-                news_subtitle: "ระบบติดตามข่าวสดประจำวันแบบ Real-Time คัดเฉพาะข่าวที่ส่งผลกระทบต่อราคาทองคำ (XAUUSD) พร้อมกลยุทธ์ตามรอย Smart Money",
+                news_title: "ศูนย์วิเคราะห์ข่าวกล่องแดงทองคำ เรียลไทม์",
+                news_subtitle: "ระบบติดตามข่าวกล่องแดงประจำวันแบบ Real-Time คัดเฉพาะข่าวที่ส่งผลกระทบต่อราคาทองคำ (XAUUSD / USD) พร้อมกลยุทธ์ตามรอย Smart Money",
                 news_period_today: "📅 ข่าวสดวันนี้",
                 news_period_tomorrow: "⏰ ข่าวพรุ่งนี้",
                 news_period_week: "🗓️ ทั้งสัปดาห์นี้",
                 news_period_guide: "📖 คลังตำรา 4 ข่าวใหญ่",
-                news_filter_all: "ทั้งหมด",
-                news_filter_red: "🔴 กล่องแดง (High)",
-                news_filter_orange: "🟠 กล่องส้ม (Medium)",
+                news_gold_red_tag: "🔴 เรดาร์เฉพาะข่าวกล่องแดงทองคำ (XAUUSD / USD)",
                 news_refresh_btn: "รีเฟรช",
                 news_tab_all: "🔥 ข่าวกล่องแดงยอดฮิตทั้งหมด",
                 news_tab_cpi: "📈 เงินเฟ้อ (CPI / PPI)",
@@ -1963,15 +1955,13 @@
                 footer_warning: "ຄຳເຕືອນຄວາມສ່ຽງ: ການເທຣດ Forex, ຄຳ ແລະ ດັດຊະນີມີຄວາມສ່ຽງສູງ ຂໍ້ມູນ ແລະ ສັນຍານຈາກລະບົບນີ້ຈັດທຳຂຶ້ນເພື່ອການວິເຄາະທາງເຕັກນິກ ແລະ ການສຶກສາເທົ່ານັ້ນ ຜູ້ລົງທຶນຄວນສຶກສາ ແລະ ບໍລິຫານຄວາມສ່ຽງດ້ວຍຕົນເອງ",
                 nav_news: "ວິເຄາະຂ່າວຮຽວທາມ",
                 news_badge: "FOREX FACTORY REAL-TIME RADAR",
-                news_title: "ສູນວິເຄາະຂ່າວກ່ອງແດງ & ກ່ອງສົ້ມ ຮຽວທາມ",
-                news_subtitle: "ລະບົບຕິດຕາມຂ່າວສົດປະຈຳວັນແບບ Real-Time ຄັດສະເພາະຂ່າວທີ່ກະທົບຕໍ່ລາຄາຄຳ (XAUUSD) ພ້ອມກົນລະຍຸດຕາມຮອຍ Smart Money",
+                news_title: "ສູນວິເຄາະຂ່າວກ່ອງແດງຄຳ ຮຽວທາມ",
+                news_subtitle: "ລະບົບຕິດຕາມຂ່າວກ່ອງແດງປະຈຳວັນແບບ Real-Time ຄັດສະເພາະຂ່າວທີ່ກະທົບຕໍ່ລາຄາຄຳ (XAUUSD / USD) ພ້ອມກົນລະຍຸດຕາມຮອຍ Smart Money",
                 news_period_today: "📅 ຂ່າວສົດມື້ນີ້",
                 news_period_tomorrow: "⏰ ຂ່າວມື້ອື່ນ",
                 news_period_week: "🗓️ ທັງອາທິດນີ້",
                 news_period_guide: "📖 ຄັງຕຳລາ 4 ຂ່າວໃຫຍ່",
-                news_filter_all: "ທັງໝົດ",
-                news_filter_red: "🔴 ກ່ອງແດງ (High)",
-                news_filter_orange: "🟠 ກ່ອງສົ້ມ (Medium)",
+                news_gold_red_tag: "🔴 ເຣດາສະເພາະຂ່າວກ່ອງແດງຄຳ (XAUUSD / USD)",
                 news_refresh_btn: "ຣີເຟຣຊ",
                 news_tab_all: "🔥 ຂ່າວກ່ອງແດງຍອດຮິດທັງໝົດ",
                 news_tab_cpi: "📈 ເງິນເຟີ້ (CPI / PPI)",
@@ -2069,15 +2059,13 @@
                 footer_warning: "Risk Warning: Trading Forex, Gold, and Indices involves substantial risk. Information and signals are for educational purposes. Always manage your risk properly.",
                 nav_news: "Live News Radar",
                 news_badge: "FOREX FACTORY REAL-TIME RADAR",
-                news_title: "Live Red & Orange Folder Economic Radar",
-                news_subtitle: "Daily real-time economic calendar tracking high & medium impact news affecting Gold (XAUUSD) with institutional SMC & CRT setups.",
+                news_title: "Live Gold Red Folder Economic Radar",
+                news_subtitle: "Daily real-time economic calendar tracking high-impact red folder news affecting Gold (XAUUSD / USD) with institutional SMC & CRT setups.",
                 news_period_today: "📅 Today's Live",
                 news_period_tomorrow: "⏰ Tomorrow",
                 news_period_week: "🗓️ This Week",
                 news_period_guide: "📖 4 Major News Guide",
-                news_filter_all: "All",
-                news_filter_red: "🔴 Red Folder (High)",
-                news_filter_orange: "🟠 Orange Folder (Medium)",
+                news_gold_red_tag: "🔴 Dedicated Gold Red Folders Only (XAUUSD / USD)",
                 news_refresh_btn: "Refresh",
                 news_tab_all: "🔥 All Red Folders",
                 news_tab_cpi: "📈 Inflation (CPI / PPI)",
@@ -3355,22 +3343,14 @@
                 }
             });
 
-            // Include all major currencies from Forex Factory: USD, EUR, GBP, JPY, AUD, CAD, CHF, NZD, CNY
-            const targetCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'NZD', 'CNY', 'All'];
-            const relevantPeriodItems = periodItems.filter(item => targetCurrencies.includes(item.country) || !item.country);
-            const redCount = relevantPeriodItems.filter(i => i.impact === 'High').length;
-            const orangeCount = relevantPeriodItems.filter(i => i.impact === 'Medium').length;
+            // Filter strictly: ONLY USD High-Impact Red Box Events (กล่องแดงทองคำ XAUUSD)
+            const relevantPeriodItems = periodItems.filter(item => item.impact === 'High' && item.country === 'USD');
+            const redCount = relevantPeriodItems.length;
 
             // Update Dynamic Status Banner
-            updateStatusBanner(banner, activeNewsPeriod, redCount, orangeCount, now, tomorrow, lang);
+            updateStatusBanner(banner, activeNewsPeriod, redCount, now, tomorrow, lang);
 
-            // Filter by Impact Pill
-            let displayItems = relevantPeriodItems.filter(item => {
-                if (item.impact !== 'High' && item.impact !== 'Medium') return false;
-                if (activeImpactFilter === 'high') return item.impact === 'High';
-                if (activeImpactFilter === 'medium') return item.impact === 'Medium';
-                return true;
-            });
+            let displayItems = [...relevantPeriodItems];
 
             // Sort chronologically
             displayItems.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -3505,8 +3485,8 @@
             lucide.createIcons();
         }
 
-        // Helper: Dynamic Status Banner
-        function updateStatusBanner(el, period, redCount, orangeCount, now, tomorrow, lang) {
+        // Helper: Dynamic Status Banner (Gold Red Radar Only)
+        function updateStatusBanner(el, period, redCount, now, tomorrow, lang) {
             const dateObj = (period === 'tomorrow') ? tomorrow : now;
             const dateString = dateObj.toLocaleDateString(lang === 'th' ? 'th-TH' : lang === 'la' ? 'lo-LA' : 'en-US', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -3518,30 +3498,7 @@
                 ? (lang === 'th' ? 'วันพรุ่งนี้' : lang === 'la' ? 'ມື້ອື່ນ' : 'Tomorrow')
                 : (lang === 'th' ? 'สัปดาห์นี้' : lang === 'la' ? 'ອາທິດນີ້' : 'This Week');
 
-            // Scenario 1: Both Red & Orange
-            if (redCount > 0 && orangeCount > 0) {
-                el.className = "p-4 sm:p-5 rounded-3xl cyber-glass border border-rose-500/50 bg-gradient-to-r from-rose-500/15 via-amber-500/10 to-transparent shadow-lg";
-                el.innerHTML = `
-                    <div class="flex items-start gap-3.5">
-                        <div class="w-11 h-11 rounded-2xl bg-rose-500/20 text-rose-500 flex items-center justify-center shrink-0 border border-rose-500/40">
-                            <i data-lucide="alert-octagon" class="w-6 h-6 animate-pulse"></i>
-                        </div>
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="px-2.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black uppercase tracking-wider">${lang === 'th' ? 'ความผันผวนระดับวิกฤต' : lang === 'la' ? 'ຄວາມຜັນຜວນລະດັບວິກິດ' : 'CRITICAL VOLATILITY'}</span>
-                                <span class="text-xs font-mono text-slate-500 dark:text-gray-400">📅 ${dateString}</span>
-                            </div>
-                            <h4 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1">
-                                ${lang === 'th' ? `${periodName} มีข่าวกล่องแดง ${redCount} ข่าว และกล่องส้ม ${orangeCount} ข่าว` : lang === 'la' ? `${periodName} ມີຂ່າວກ່ອງແດງ ${redCount} ຂ່າວ ແລະ ກ່ອງສົ້ມ ${orangeCount} ຂ່າວ` : `${periodName} features ${redCount} Red & ${orangeCount} Orange events`}
-                            </h4>
-                            <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                                ${lang === 'th' ? 'ตลาดจะเกิดความผันผวนสูงมาก แนะนำเคลียร์ออเดอร์สั้น 15 นาทีก่อนข่าว และรอสัญญาณสไนเปอร์หลังข่าวจบ' : lang === 'la' ? 'ຕະຫຼາດຈະຜັນຜວນສູງຫຼາຍ ແນະນຳເຄຼຍອໍເດີສັ້ນ 15 ນາທີກ່ອນຂ່າວ ແລະ ລໍຖ້າສັນຍານສະໄນເປີຫຼັງຂ່າວ' : 'Extreme market volatility expected. Clear scalps 15 minutes prior to release and wait for post-news sniper entries.'}
-                            </p>
-                        </div>
-                    </div>`;
-            }
-            // Scenario 2: Red Only
-            else if (redCount > 0) {
+            if (redCount > 0) {
                 el.className = "p-4 sm:p-5 rounded-3xl cyber-glass border border-rose-500/50 bg-gradient-to-r from-rose-500/15 via-rose-500/5 to-transparent shadow-lg";
                 el.innerHTML = `
                     <div class="flex items-start gap-3.5">
@@ -3550,42 +3507,18 @@
                         </div>
                         <div>
                             <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="px-2.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black uppercase tracking-wider">${lang === 'th' ? 'เตือนภัยกล่องแดง (HIGH IMPACT)' : lang === 'la' ? 'ເຕືອນໄພກ່ອງແດງ (HIGH IMPACT)' : 'HIGH IMPACT ALERT'}</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black uppercase tracking-wider">${lang === 'th' ? 'เตือนภัยกล่องแดงทองคำ (HIGH IMPACT)' : lang === 'la' ? 'ເຕືອນໄພກ່ອງແດງຄຳ (HIGH IMPACT)' : 'GOLD HIGH IMPACT ALERT'}</span>
                                 <span class="text-xs font-mono text-slate-500 dark:text-gray-400">📅 ${dateString}</span>
                             </div>
                             <h4 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1">
-                                ${lang === 'th' ? `${periodName} มีข่าวกล่องแดง ${redCount} ข่าว (ความผันผวนรุนแรง!)` : lang === 'la' ? `${periodName} ມີຂ່າວກ່ອງແດງ ${redCount} ຂ່າວ (ຄວາມຜັນຜວນຮຸນແຮງ!)` : `${periodName} features ${redCount} High-Impact Red events!`}
+                                ${lang === 'th' ? `${periodName} มีข่าวกล่องแดงทองคำ ${redCount} ข่าว (ความผันผวนรุนแรง!)` : lang === 'la' ? `${periodName} ມີຂ່າວກ່ອງແດງຄຳ ${redCount} ຂ່າວ (ຄວາມຜັນຜວນຮຸນແຮງ!)` : `${periodName} features ${redCount} Gold High-Impact Red events!`}
                             </h4>
                             <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                                ${lang === 'th' ? 'ระวังสถาบันกวาด Liquidity ทั้งสองฝั่ง ห้ามไล่ราคาในแท่งข่าวแรก' : lang === 'la' ? 'ລະວັງສະຖາບັນກວາດ Liquidity ທັງສອງຝັ່ງ ຫ້າມໄລ່ລາຄາໃນແທ່ງຂ່າວທຳອິດ' : 'Beware institutional liquidity sweeps. Never chase the initial news candle.'}
+                                ${lang === 'th' ? 'สถาบันมักกวาด Liquidity ทั้งสองฝั่ง แนะนำเคลียร์ออเดอร์สั้นก่อนข่าว 15 นาที และรอสัญญาณ Inversion FVG / CRT สไนเปอร์หลังข่าวจบ' : lang === 'la' ? 'ສະຖາບັນມັກກວາດ Liquidity ທັງສອງຝັ່ງ ແນະນຳເຄຼຍອໍເດີສັ້ນກ່ອນຂ່າວ 15 ນາທີ ແລະ ລໍຖ້າສັນຍານ Inversion FVG / CRT ສະໄນເປີຫຼັງຂ່າວ' : 'Beware institutional liquidity sweeps. Clear short scalps 15 mins prior and wait for post-news sniper entries.'}
                             </p>
                         </div>
                     </div>`;
-            }
-            // Scenario 3: Orange Only
-            else if (orangeCount > 0) {
-                el.className = "p-4 sm:p-5 rounded-3xl cyber-glass border border-amber-500/50 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent shadow-lg";
-                el.innerHTML = `
-                    <div class="flex items-start gap-3.5">
-                        <div class="w-11 h-11 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0 border border-amber-500/40">
-                            <i data-lucide="zap" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider">${lang === 'th' ? 'แจ้งเตือนกล่องส้ม (MEDIUM IMPACT)' : lang === 'la' ? 'ແຈ້ງເຕືອນກ່ອງສົ້ມ (MEDIUM IMPACT)' : 'MEDIUM IMPACT'}</span>
-                                <span class="text-xs font-mono text-slate-500 dark:text-gray-400">📅 ${dateString}</span>
-                            </div>
-                            <h4 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1">
-                                ${lang === 'th' ? `${periodName} มีข่าวกล่องส้ม ${orangeCount} ข่าว (ความผันผวนปานกลาง)` : lang === 'la' ? `${periodName} ມີຂ່າວກ່ອງສົ້ມ ${orangeCount} ຂ່າວ (ຄວາມຜັນຜວນປານກາງ)` : `${periodName} features ${orangeCount} Orange Folder events (Medium Volatility)`}
-                            </h4>
-                            <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                                ${lang === 'th' ? 'กราฟอาจมีแรงเหวี่ยงช่วงสั้นๆ ในช่วงเวลาปล่อยข่าว ตรวจสอบเวลาก่อนลั่นไกออเดอร์' : lang === 'la' ? 'ກຣາຟອາດມີແຮງສະວິງຊ່ວງສັ້ນໆ ໃນຊ່ວງເວລາປ່ອຍຂ່າວ ກວດສອບເວລາກ່ອນເປີດອໍເດີ' : 'Short-term volatility expected around release time. Verify timestamps prior to execution.'}
-                            </p>
-                        </div>
-                    </div>`;
-            }
-            // Scenario 4: No Red / No Orange (Calm Market)
-            else {
+            } else {
                 el.className = "p-4 sm:p-5 rounded-3xl cyber-glass border border-emerald-500/50 bg-gradient-to-r from-emerald-500/15 via-emerald-500/5 to-transparent shadow-lg";
                 el.innerHTML = `
                     <div class="flex items-start gap-3.5">
@@ -3598,17 +3531,17 @@
                                 <span class="text-xs font-mono text-slate-500 dark:text-gray-400">📅 ${dateString}</span>
                             </div>
                             <h4 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1">
-                                ${lang === 'th' ? `${periodName} ไม่มีข่าวกล่องแดงหรือส้มกระทบทองคำ` : lang === 'la' ? `${periodName} ບໍ່ມີຂ່າວກ່ອງແດງ ຫຼື ກ່ອງສົ້ມກະທົບຄຳ` : `${periodName} has zero Red or Orange impact events for Gold`}
+                                ${lang === 'th' ? `${periodName} ไม่มีข่าวกล่องแดงกระทบทองคำ (Normal Flow)` : lang === 'la' ? `${periodName} ບໍ່ມີຂ່າວກ່ອງແດງກະທົບຄຳ (Normal Flow)` : `${periodName} has zero Gold High-Impact Red events`}
                             </h4>
                             <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                                ${lang === 'th' ? 'สภาวะตลาดเป็นปกติ สัญญาณ AI บอทเทรดได้ตามเทรนด์และรอบโครงสร้างราคาได้อย่างราบรื่น' : lang === 'la' ? 'ພາວະຕະຫຼາດເປັນປົກກະຕິ ສັນຍານ AI ບັອດເທຣດໄດ້ຕາມເທຣນໂຄງສ້າງລາຄາຢ່າງສະດວກ' : 'Market condition is smooth. AI Bot signals can follow technical market structures without abnormal spread spikes.'}
+                                ${lang === 'th' ? 'ราคาทองคำเคลื่อนไหวตามโครงสร้างราคาปกติ ไม่มีข่าวกล่องแดง USD รบกวนสเปรด สามารถเทรดตามระบบ SMC ได้อย่างปลอดภัย' : lang === 'la' ? 'ລາຄາຄຳແລ່ນຕາມໂຄງສ້າງລາຄາປົກກະຕິ ບໍ່ມີຂ່າວກ່ອງແດງ USD ລົບກວນສະເປຣດ ສາມາດເທຣດຕາມລະບົບ SMC ໄດ້ຢ່າງປອດໄພ' : 'Gold prices move according to technical market structures without major USD high-impact news disruption.'}
                             </p>
                         </div>
                     </div>`;
             }
         }
 
-        // Helper: Empty State
+        // Helper: Empty State (Gold Red Radar Only)
         function renderEmptyPeriodState(container, period, lang) {
             const nextBtn = (period === 'today') 
                 ? `<button onclick="switchNewsPeriod('tomorrow')" class="mt-4 px-5 py-2 rounded-xl bg-cyan-500/20 text-cyan-500 hover:bg-cyan-500/30 text-xs font-bold border border-cyan-500/30 transition flex items-center gap-1.5 mx-auto">
@@ -3624,10 +3557,10 @@
                     <i data-lucide="check-circle-2" class="w-7 h-7"></i>
                 </div>
                 <h4 class="text-base font-extrabold text-slate-900 dark:text-white mb-1">
-                    ${lang === 'th' ? 'ไม่มีข่าวในหมวดหมู่นี้' : lang === 'la' ? 'ບໍ່ມີຂ່າວໃນໝວດໝູ່ນີ້' : 'No Events in this Category'}
+                    ${lang === 'th' ? 'ไม่มีข่าวกล่องแดงทองคำในช่วงเวลานี้' : lang === 'la' ? 'ບໍ່ມີຂ່າວກ່ອງແດງຄຳໃນຊ່ວງເວລານີ້' : 'No High-Impact Gold Events Found'}
                 </h4>
                 <p class="text-xs text-slate-500 dark:text-gray-400 max-w-sm mx-auto">
-                    ${lang === 'th' ? 'ไม่มีข่าวกล่องแดงหรือส้มในตัวกรองนี้ คุณสามารถเลือกดูวันอื่นหรือสลับตัวกรองทั้งหมดได้ครับ' : lang === 'la' ? 'ບໍ່ມີຂ່າວກ່ອງແດງ ຫຼື ກ່ອງສົ້ມໃນຕົວກັ່ນຕອງນີ້ ສາມາດເລືອກເບິ່ງມື້ອື່ນໄດ້' : 'No matching high or medium impact events found for this filter.'}
+                    ${lang === 'th' ? 'ตลาดทองคำวิ่งตามโครงสร้างราคาปกติ ไม่มีข่าวกล่องแดง USD รบกวนความผันผวน' : lang === 'la' ? 'ຕະຫຼາດຄຳແລ່ນຕາມໂຄງສ້າງລາຄາປົກກະຕິ ບໍ່ມີຂ່າວກ່ອງແດງ USD ລົບກວນຄວາມຜັນຜວນ' : 'Gold market is moving cleanly along technical structures without high-impact red folder disruption.'}
                 </p>
                 ${nextBtn}
             </div>`;
